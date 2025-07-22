@@ -1,0 +1,121 @@
+/*Navbar*/
+body
+{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}  
+.container{
+    flex: 1;
+}
+.navbar{
+    height: 5rem;
+    top: 0px;
+    position: sticky !important;
+    background-color: white;
+    z-index: 2;
+}
+.fa-compass{
+    color: #fe424d;
+    font-size: 2rem;
+}
+
+.nav-link{
+    color: #222222 !important;
+}
+
+/* footer */
+.f-info-links a{
+    text-decoration: none;
+    color: #222222;
+}
+.f-info-links a:hover{
+    text-decoration: underline;
+}
+.f-info-socials{
+    font-size: 1.2rem;
+}
+.f-info-socials i{
+    margin-right: 1rem;
+}
+.f-info{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-top: 1px solid black;
+    background-color: #ebebeb;
+    position: relative;
+    bottom: -200px;
+}
+
+/* cards */
+ 
+.listing-card{
+    border: none !important;
+    margin-bottom:2rem !important;
+} 
+.card-img-top{
+    border-radius: 20px !important;
+    width: 100% !important;
+    object-fit: cover !important;
+}
+
+.card-body{
+    padding: 0px !important;
+    
+
+}
+.card-text p{
+     font-weight: 400 !important;    
+}
+.card-text a{
+    text-decoration: none !important;
+    color: #222222 !important;
+    font-weight: bold !important;   
+}
+/* Card effect */
+
+.card-img-overlay {
+    pointer-events: none;
+    transition: background-color 0.3s ease;
+}
+
+.card:hover .card-img-overlay {
+    opacity: 0.2;
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+.btn{
+
+    border: none !important;
+}
+
+/* show page */
+.show-img{
+   height: 30vh !important;
+   width:70vw !important; 
+}
+.wid{
+    width: 100%;
+}
+.delbtn{
+    background-color: black !important;
+}
+
+.edit-btn{
+     background-color: #fe424d !important;
+}
+
+.edit-btn a{
+    color: white;
+    
+    text-decoration: none;
+}
+.btn-container{
+    display: flex;
+   
+}
+.adderbtn{
+     background-color: #fe424d !important;
+}

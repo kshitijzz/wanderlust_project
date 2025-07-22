@@ -1,0 +1,29 @@
+<%= layout("/layouts/boilerplate.ejs") %>
+<body>
+    <h1>update Listing</h1>
+    <hr>
+    <div class="row">
+            <div class="col-8 offset-2">
+                <form action="/listing/<%= data._id %>?_method=PUT" method="post" novalidate class="needs-validation" enctype="multipart/form-data">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text"id="title" class="form-control" name="title" value="<%= data.title %>" required><br>
+                    <label for="desc" class="form-label">Description</label>
+                    <input type="text" class="form-control" id="desc" name="description" value="<%= data.description %>" required><br>
+                    <div class="mb-3">
+                       <p>Original Image</p>
+                       <img src="<%= data.image.url %>" alt="" height="200" width="250">
+                    </div>
+                     <label for="img" class="form-label">Upload New Image</label>
+                    <input type="file" id="img" class="form-control" name="image" ><br>
+                     <label for="Price" class="form-label">Price</label>
+                    <input type="number" id="Price" class="form-control" name="price" value="<%= data.price %>" required><br>
+                     <label for="loc" class="form-label">location</label>
+                    <input type="text" id="loc" class="form-control" name="location" value="<%= data.location %>" required><br>
+                     <label for="country" class="form-label">country</label>
+                    <input type="text" id="country" class="form-control" name="country" value="<%= data.country %>" required><br>
+                    <button class="btn btn-dark editerbtn">update</button>
+                </form>
+
+            </div>
+        </div>
+</body>
