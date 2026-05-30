@@ -21,7 +21,6 @@ const User = require("./models/user.js");
 
 
 
-
 const listingRouter = require("./routes/listing.js");
 const reviewsRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");

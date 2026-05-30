@@ -9,7 +9,7 @@ const { saveRedirectUrl } = require("../middleware.js");
 const usercontroller= require("../controllers/users.js");
 
 
-//signup 
+//signup
 router.route("/signup")
 .get( usercontroller.userform)
 .post(usercontroller.adduser )

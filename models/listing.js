@@ -1,4 +1,4 @@
- const mongoose = require("mongoose");
+const mongoose = require("mongoose");
 const Review = require("./review");
  
 const listSchema = mongoose.Schema({
