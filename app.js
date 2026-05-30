@@ -19,32 +19,30 @@ const passport = require("passport");
 const LocalStratergy = require("passport-local");
 const User = require("./models/user.js");
 
-app.get("/", (req, res) => {
-    res.redirect("/listing");
-});
-
 const listingRouter = require("./routes/listing.js");
 const reviewsRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 
 //url to atlas db
- const dburl= process.env.ATLASDB_URL;
+const dburl = process.env.ATLASDB_URL;
 
+const store = MongoStore.create(
+    {
+        mongoUrl: dburl,
+        crypto: {
+            secret: process.env.SECRET_SESSION_KEY,
+        },
+        touchAfter: 24 * 3600,
+    }
+);
 
-const store= MongoStore.create(
-    {mongoUrl:dburl,
-    crypto:{
-        secret:process.env.SECRET_SESSION_KEY,
-    },
-    touchAfter:24* 3600,
+// FIXED
+store.on("error", (err) => {
+    console.log("error in mongo session store", err);
 });
 
-store.on("error",()=>{
-    console.log("error in mongo session store",err);
-})
-
 app.use(session({
-    store:store,
+    store: store,
     secret: process.env.SECRET_SESSION_KEY,
     resave: false,
     saveUninitialized: true,
@@ -55,8 +53,6 @@ app.use(session({
     }
 }));
 
-
-
 app.use(flash());//pehle flash aaega phir uske baad routes aaenge
 
 app.use(passport.initialize());
@@ -66,7 +62,6 @@ passport.use(new LocalStratergy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
@@ -75,37 +70,38 @@ app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
 
-    res.locals.currentuser=req.user;
+    res.locals.currentuser = req.user;
     next();
-})
-
-
-
+});
 
 const { listingSchema } = require("./schema.js");
 const { reviewSchema } = require("./schema.js");
-
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use(methodOverride("_method"));
 
-
 app.engine('ejs', ejsMate);
+
 //connectiong to mongoDB
 async function main() {
-   
     await mongoose.connect(dburl);
 }
+
 main()
     .then(() => {
         console.log("connected to database");
     })
     .catch((err) => {
         console.log("not connected to database");
-    })
-//home route
+        console.log(err);
+    });
+
+// HOME ROUTE ADDED
+app.get("/", (req, res) => {
+    res.redirect("/listing");
+});
 
 app.use("/listing", listingRouter);
 app.use("/listing/:id/reviews", reviewsRouter);
@@ -114,9 +110,11 @@ app.use("/", userRouter);
 app.use((err, req, res, next) => {
     let { status = 500, message = "some error occured" } = err;
     res.render("error.ejs", { status, message });
+});
 
-})
+// RENDER PORT FIX
+const port = process.env.PORT || 3000;
 
-app.listen(3000, () => {
-    console.log("server is running");
-})
+app.listen(port, () => {
+    console.log(`server is running on port ${port}`);
+});
